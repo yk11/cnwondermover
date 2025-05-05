@@ -1,29 +1,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<style type="text/css">
-        body { width: 60%; margin: 25px 20%; font-size: 1em; font-family: Verdana,Arial; color: #CCC; background: #111; }
-        h1 { text-align: center; color: #FFF; }
+    <meta charset="utf-8">
+    <style type="text/css">
+        body { width: 60%; max-width: 1000px; margin: 25px 20%; font-size: 16px; font-family: Verdana,Arial; color: #CCC; background: #111; }
+        button, input { font-size: 16px; padding: 4px 8px; }
+        h1 { text-align: center; color: #FFF; margin-top: 0; }
         a { color: #FFBB88; }
-
-        #form { width: auto; margin: 0 auto; }
-
-        table { border: collapse; margin: auto; max-width: 600px; }
-        table td { padding: 10px 16px; }
-
-        .center { text-align: center; margin: 0 auto; }
+        form { width: auto; margin: 0 auto; }
+        hr { margin: 20px 0; }
 
         @media screen and (max-width: 960px) {
             body { width: 98%; margin: 0 1%; }
         }
+
+        .align-center { text-align: center; margin: 0 auto; }
+        .align-right { text-align: right; float: right; }
+
+        table { border: collapse; margin: auto; max-width: 600px; }
+        table th { font-weight: bold; position: sticky; top: 0; }
+        table td { padding: 10px 16px; }
+
+	    button { background: #333; color: #FFF; border-radius: 5px; border: 1px solid #CCC; padding: 6px 10px; cursor: pointer; text-decoration: none; line-height: normal; font-size: 16px; margin: 0 10px; vertical-align: baseline; text-align: center; }
+	    @media screen and (max-width: 783px) {
+            button { font-size: 24px; }
+        }
+	    button:hover { color: #FF8833; }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G16KLLYP6W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-G16KLLYP6W');
+    </script>
 </head>
 
 <body>
 <h1>Cyber Nations Moon & Mars Wonder Mover</h1>
+<hr/>
 
-<p>Instructions: Log into <a href="https://www.cybernations.net/" target="_blank">Cyber Nations</a> and copy the link you normally use to move a Moon or Mars facility. Paste it in the first box below, then input this month's latitude and longitude and click "Generate URLs". The latest lat/long can be found at these links: <a href="https://forums.cybernations.net/topic/64843-moon-hotspot/?do=getLastComment" target="_blank">Moon Hotspot</a> & <a href="https://forums.cybernations.net/topic/71214-mars-hotspot/?do=getLastComment" target="_blank">Mars Hotspot</a>. Make sure you're using the current month's hotspot.</p>
+<p>Instructions:</p>
+<ul>
+    <li>Log into <a href="https://www.cybernations.net/" target="_blank">Cyber Nations</a> and copy the link you normally use to move a Moon or Mars facility</li>
+    <li>Paste it in the first box below</li>
+    <li>Input this month's latitude and longitude values</li>
+    <li>Click "Generate URLs"</li>
+</ul>
+    
+<p>The latest lat/long can be found at these links: <a href="https://forums.cybernations.net/topic/64843-moon-hotspot/?do=getLastComment" target="_blank">Moon Hotspot</a> & <a href="https://forums.cybernations.net/topic/71214-mars-hotspot/?do=getLastComment" target="_blank">Mars Hotspot</a>.</p>
+
+<p>Make sure you're using the current month's hotspot.  You can use the <a href="https://www.cnhotspotfinder.com/" target="_blank">Moon & Mars Hotspot Finder</a> tool.</p>
+
+<p>Thanks to <a href="https://forums.cybernations.net/profile/20027-arcane/" target="_blank">Arcane</a> for providing the basis for this tool.</p>
 
 <table id="form">
     <tr>
@@ -39,25 +71,33 @@
         <td><input id="longitude" name="longitude" type="text" size="20" maxlength="20" value="" /></td>
     </tr>
     <tr>
-        <td colspan="2" class="center"><button onclick="generateUrls()">Generate URLs</button></td>
+        <td>New resource</td>
+        <td><input id="new_resource" name="resource" type="checkbox" value="" /></td>
+    </tr>
+    <tr>
+        <td>New citizen storage</td>
+        <td><input id="new_storage" name="resource" type="checkbox" value="" /></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="align-center"><button onclick="generateUrls()">Generate URLs</button></td>
     </tr>
 </table>
 
-<div id="move-links" class="center" style="display: none;">
+<div id="move-links" class="align-center" style="display: none;">
     <hr/>
 
     <h2>Moon Wonder Links</h2>
     <p>
-        <a id="moon-base" href="#">Base</a> |
-        <a id="moon-mine" href="#">Mine</a> |
-        <a id="moon-colony" href="#">Colony</a>
+        <a id="moon-base" href="#" target="_blank">Base</a> |
+        <a id="moon-mine" href="#" target="_blank">Mine</a> |
+        <a id="moon-colony" href="#" target="_blank">Colony</a>
     </p>
 
     <h2>Mars Wonder Links</h2>
     <p>
-        <a id="mars-base" href="#">Base</a> |
-        <a id="mars-mine" href="#">Mine</a> |
-        <a id="mars-colony" href="#">Colony</a>
+        <a id="mars-base" href="#" target="_blank">Base</a> |
+        <a id="mars-mine" href="#" target="_blank">Mine</a> |
+        <a id="mars-colony" href="#" target="_blank">Colony</a>
     </p>
 </div>
 
@@ -81,6 +121,8 @@
         const inputUrl = document.getElementById("url");
         const inputLat = document.getElementById("latitude");
         const inputLon = document.getElementById("longitude");
+        const inputResource = document.getElementById("new_resource").checked;
+        const inputStorage = document.getElementById("new_storage").checked;
 
         const moveUrl = inputUrl.value;
 
@@ -107,18 +149,18 @@
         const value = valueMatch[1];
 
         const cnBaseUrl = `https://www.cybernations.net/national_wonders_map.asp?Nation_ID=${nationId}`;
+        const upgradeResourceUrl = inputResource ? '&Upgrade=1' : '';
+        const upgradeStorageUrl = inputStorage ? '&Upgrade=1' : '';
 
-        const moonUrl = `${cnBaseUrl}&Location=Moon`;
-        const marsUrl = `${cnBaseUrl}&Location=Mars`;
         const coordBaseUrl = `lat=${inputLat.value}&lon=${inputLon.value}&VALUE=${value}`;
 
-        setLink("moon-base", `${moonUrl}&Type=Base&${coordBaseUrl}`);
-        setLink("moon-mine", `${moonUrl}&Type=Mine&${coordBaseUrl}`);
-        setLink("moon-colony", `${moonUrl}&Type=Colony&${coordBaseUrl}`);
+        setLink("moon-base", `${cnBaseUrl}&Location=Moon&Type=Base&${coordBaseUrl}`);
+        setLink("moon-mine", `${cnBaseUrl}${upgradeResourceUrl}&Location=Moon&Type=Mine&${coordBaseUrl}`);
+        setLink("moon-colony", `${cnBaseUrl}${upgradeStorageUrl}&Location=Moon&Type=Colony&${coordBaseUrl}`);
 
-        setLink("mars-base", `${marsUrl}&Type=Base&${coordBaseUrl}`);
-        setLink("mars-mine", `${marsUrl}&Type=Mine&${coordBaseUrl}`);
-        setLink("mars-colony", `${marsUrl}&Type=Colony&${coordBaseUrl}`);
+        setLink("mars-base", `${cnBaseUrl}&Location=Mars&Type=Base&${coordBaseUrl}`);
+        setLink("mars-mine", `${cnBaseUrl}${upgradeResourceUrl}&Location=Mars&Type=Mine&${coordBaseUrl}`);
+        setLink("mars-colony", `${cnBaseUrl}${upgradeStorageUrl}&Location=Mars&Type=Colony&${coordBaseUrl}`);
 
         document.getElementById("move-links").style.display = "block";
     }
